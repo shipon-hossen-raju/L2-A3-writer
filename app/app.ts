@@ -12,4 +12,7 @@ app.get("/", (req: Request, res: Response) => {
 // app routes
 app.use("/api/", router);
 
+// ------------------
+app.use();
+
 export default app;

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { userService } from "./user.service";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
+import statusCode from "../../utils/status.code";
 
 const createUser = catchAsync(async (req, res) => {
   console.log("user called req.body -> ", req.body);
@@ -14,7 +15,7 @@ const createUser = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     message: "user create successful",
-    statusCode: 200,
+    statusCode: statusCode.ok,
     data: result,
   });
 });
