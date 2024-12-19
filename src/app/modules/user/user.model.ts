@@ -1,7 +1,7 @@
-import { model, Schema } from "mongoose";
-import { TUser } from "./user.interface";
 import bcrypt from "bcrypt";
+import { model, Schema } from "mongoose";
 import config from "../../config";
+import { TUser, UserModel } from "./user.interface";
 
 const userSchema = new Schema<TUser>(
   {
@@ -19,7 +19,7 @@ const userSchema = new Schema<TUser>(
     password: {
       type: String,
       required: true,
-      // select: 0,
+      select: 0,
     },
     role: {
       type: String,
@@ -27,6 +27,10 @@ const userSchema = new Schema<TUser>(
       default: "user",
     },
     isBlocked: {
+      type: Boolean,
+      default: false,
+    },
+    isDeleted: {
       type: Boolean,
       default: false,
     },
@@ -50,9 +54,7 @@ userSchema.post("save", function (docs, next) {
   next();
 });
 
-userSchema.statics.isUserExists = async function (
-  email: string,
-): Promise<TUser> {
+userSchema.statics.isUserExists = async function (email: string) {
   return await this.findOne({ email }).select("+password");
 };
 
@@ -63,6 +65,6 @@ userSchema.statics.isPasswordMatched = async function (
   return await bcrypt.compare(plainTextPassword, hashedPassword);
 };
 
-const userModel = model<TUser>("User", userSchema);
+const userModel = model<TUser, UserModel>("User", userSchema);
 
 export default userModel;

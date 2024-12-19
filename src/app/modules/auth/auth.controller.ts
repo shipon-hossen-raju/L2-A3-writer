@@ -1,8 +1,11 @@
+import config from "../../config";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import statusCode from "../../utils/status.code";
 import { userService } from "../user/user.service";
+import { authService } from "./auth.service";
 
+// register user
 const registerUser = catchAsync(async (req, res) => {
   const result = await userService.createUserIntoDB(req.body);
 
@@ -24,6 +27,27 @@ const registerUser = catchAsync(async (req, res) => {
   });
 });
 
+// login user
+
+const loginUser = catchAsync(async (req, res) => {
+  console.log("object => ", req.body);
+  const result = await authService.loginUser(req.body);
+  const { accessToken, refreshToken } = result;
+
+  res.cookie("refreshToken", refreshToken, {
+    secure: config.node_env === "production",
+    httpOnly: true,
+  });
+
+  sendResponse(res, {
+    success: true,
+    message: "User logged in successfully",
+    statusCode: statusCode.ok,
+    data: { accessToken },
+  });
+});
+
 export const authController = {
   registerUser,
+  loginUser,
 };
