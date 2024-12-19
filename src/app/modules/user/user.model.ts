@@ -39,9 +39,29 @@ const userSchema = new Schema<TUser>(
 userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(
     this.password,
-    config.bcrypt_salt_round as string,
+    Number(config.bcrypt_salt_round as string),
   );
+
+  next();
 });
+
+userSchema.post("save", function (docs, next) {
+  docs.password = "";
+  next();
+});
+
+userSchema.statics.isUserExists = async function (
+  email: string,
+): Promise<TUser> {
+  return await this.findOne({ email }).select("+password");
+};
+
+userSchema.statics.isPasswordMatched = async function (
+  plainTextPassword,
+  hashedPassword,
+) {
+  return await bcrypt.compare(plainTextPassword, hashedPassword);
+};
 
 const userModel = model<TUser>("User", userSchema);
 
