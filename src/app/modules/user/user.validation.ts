@@ -7,7 +7,7 @@ const userCreateValidation = z.object({
         required_error: "Name is required",
         invalid_type_error: "Name must be a string",
       })
-      .min(1, { message: "Name must be at least 1 character or more" }),
+      .min(3, { message: "Name must be at least 3 characters or more" }),
     email: z
       .string({
         required_error: "Email is required",
@@ -16,7 +16,15 @@ const userCreateValidation = z.object({
       .email({
         message: "Email must be in a email format",
       }),
+    password: z
+      .string({
+        required_error: "Password is required",
+        invalid_type_error: "Password must be a string",
+      })
+      .min(6, { message: "Password must be at least 6 characters or more" }),
+
     isBlocked: z.boolean().optional().default(false),
+    isDeleted: z.boolean().optional().default(false),
   }),
 });
 
