@@ -6,6 +6,10 @@ const createBlogIntoDB = async (payload: TBlog) => {
   return blogSaved;
 };
 
+// update blog
+const updateBlogIntoDb = async (payload: Partial<TBlog>) => {};
+
 export const blogService = {
   createBlogIntoDB,
+  updateBlogIntoDb,
 };

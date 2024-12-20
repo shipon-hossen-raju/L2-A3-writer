@@ -15,7 +15,7 @@ const moduleRoutes = [
     route: UserRoute,
   },
   {
-    path: "/",
+    path: "/blogs",
     route: blogRoute,
   },
 ];

@@ -14,9 +14,6 @@ const createBlog = catchAsync(async (req, res) => {
   };
 
   const savedResult = await blogService.createBlogIntoDB(clientData);
-
-  // find user by id
-
   const result = {
     _id: savedResult?._id,
     title: savedResult?.title,
@@ -32,6 +29,10 @@ const createBlog = catchAsync(async (req, res) => {
   });
 });
 
+// update blog
+const updateBlog = catchAsync(async (req, res) => {});
+
 export const blogController = {
   createBlog,
+  updateBlog,
 };
