@@ -30,7 +30,6 @@ const registerUser = catchAsync(async (req, res) => {
 // login user
 
 const loginUser = catchAsync(async (req, res) => {
-  console.log("object => ", req.body);
   const result = await authService.loginUser(req.body);
   const { accessToken, refreshToken } = result;
 
@@ -43,7 +42,7 @@ const loginUser = catchAsync(async (req, res) => {
     success: true,
     message: "User logged in successfully",
     statusCode: statusCode.ok,
-    data: { accessToken },
+    data: { token: accessToken },
   });
 });
 
