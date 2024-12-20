@@ -1,7 +1,8 @@
+import AppError from "../../errors/AppError";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import statusCode from "../../utils/status.code";
-import { TBlog } from "./blog.interface";
+import { TBlog, TUpdateBlog } from "./blog.interface";
 import { blogService } from "./blog.service";
 
 const createBlog = catchAsync(async (req, res) => {
@@ -12,6 +13,9 @@ const createBlog = catchAsync(async (req, res) => {
     content,
     author: _id,
   };
+
+  if (!req.user)
+    throw new AppError(statusCode.unauthorized, "Unauthorized access");
 
   const savedResult = await blogService.createBlogIntoDB(clientData);
   const result = {
@@ -30,7 +34,34 @@ const createBlog = catchAsync(async (req, res) => {
 });
 
 // update blog
-const updateBlog = catchAsync(async (req, res) => {});
+const updateBlog = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+
+  const clientData: TUpdateBlog = {
+    title,
+    content,
+  };
+
+  if (!req.user)
+    throw new AppError(statusCode.unauthorized, "Unauthorized access");
+
+  const updatedResult = await blogService.updateBlogIntoDB(id, clientData);
+
+  const result = {
+    _id: updatedResult?._id,
+    title: updatedResult?.title,
+    content: updatedResult?.content,
+    author: req.user,
+  };
+
+  sendResponse(res, {
+    success: true,
+    message: "blog updated successfully",
+    statusCode: statusCode.ok,
+    data: result,
+  });
+});
 
 export const blogController = {
   createBlog,

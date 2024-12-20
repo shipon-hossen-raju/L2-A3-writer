@@ -15,6 +15,11 @@ route.post(
 );
 
 // update route
-route.patch("/:id", blogController.updateBlog);
+route.patch(
+  "/:id",
+  auth(USER_ROLE.user),
+  validateRequest(blogValidation.updateBlogValidation),
+  blogController.updateBlog,
+);
 
 export const blogRoute = route;

@@ -7,4 +7,11 @@ const createBlogValidation = z.object({
   }),
 });
 
-export const blogValidation = { createBlogValidation };
+const updateBlogValidation = z.object({
+  body: z.object({
+    title: z.string().optional(),
+    content: z.string().optional(),
+  }),
+});
+
+export const blogValidation = { createBlogValidation, updateBlogValidation };

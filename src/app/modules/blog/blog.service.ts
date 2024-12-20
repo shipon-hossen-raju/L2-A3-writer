@@ -1,4 +1,4 @@
-import { TBlog } from "./blog.interface";
+import { TBlog, TUpdateBlog } from "./blog.interface";
 import BlogModel from "./blog.model";
 
 const createBlogIntoDB = async (payload: TBlog) => {
@@ -7,9 +7,15 @@ const createBlogIntoDB = async (payload: TBlog) => {
 };
 
 // update blog
-const updateBlogIntoDb = async (payload: Partial<TBlog>) => {};
+const updateBlogIntoDB = async (id: string, payload: Partial<TUpdateBlog>) => {
+  const updatedBlog = await BlogModel.findByIdAndUpdate(id, payload, {
+    new: true,
+  });
+
+  return updatedBlog;
+};
 
 export const blogService = {
   createBlogIntoDB,
-  updateBlogIntoDb,
+  updateBlogIntoDB,
 };
