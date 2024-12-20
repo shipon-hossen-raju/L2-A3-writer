@@ -22,4 +22,12 @@ route.patch(
   blogController.updateBlog,
 );
 
+// delete route
+route.delete(
+  "/:id",
+  auth(USER_ROLE.user),
+  validateRequest(blogValidation.updateBlogValidation),
+  blogController.deleteBlog,
+);
+
 export const blogRoute = route;

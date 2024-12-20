@@ -63,7 +63,24 @@ const updateBlog = catchAsync(async (req, res) => {
   });
 });
 
+// update blog
+const deleteBlog = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  if (!req.user)
+    throw new AppError(statusCode.unauthorized, "Unauthorized access");
+
+  const updatedResult = await blogService.deleteBlogIntoDB(id);
+
+  sendResponse(res, {
+    success: true,
+    message: "blog delete successfully",
+    statusCode: statusCode.ok,
+  });
+});
+
 export const blogController = {
   createBlog,
   updateBlog,
+  deleteBlog,
 };
