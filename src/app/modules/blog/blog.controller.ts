@@ -46,6 +46,14 @@ const updateBlog = catchAsync(async (req, res) => {
   if (!req.user)
     throw new AppError(statusCode.unauthorized, "Unauthorized access");
 
+  const blog = await blogService.getBlogById(id);
+  if (!blog)
+    throw new AppError(statusCode.notFound, "Blog not found with this id");
+
+  // own blog check
+  if (blog?.author?.toString() !== req.user?._id?.toString())
+    throw new AppError(statusCode.unauthorized, "Unauthorized access");
+
   const updatedResult = await blogService.updateBlogIntoDB(id, clientData);
 
   const result = {
@@ -79,8 +87,32 @@ const deleteBlog = catchAsync(async (req, res) => {
   });
 });
 
+// get all blogs from db by search, sortby, filter
+const getAllBlogs = catchAsync(async (req, res) => {
+  const { search, sortBy, sortOrder, filter } = req.query;
+
+  console.log("req.query ", req.query);
+
+  const result = await blogService.getAllBlogsFromDB(
+    search as string,
+    sortBy as string,
+    sortOrder as string,
+    filter as string,
+  );
+
+  console.log("blog result ", result);
+
+  sendResponse(res, {
+    success: true,
+    message: "all blogs",
+    statusCode: statusCode.ok,
+    data: result,
+  });
+});
+
 export const blogController = {
   createBlog,
   updateBlog,
   deleteBlog,
+  getAllBlogs,
 };

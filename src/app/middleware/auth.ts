@@ -8,10 +8,7 @@ import userModel from "../modules/user/user.model";
 
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req, res, next) => {
-    console.log("requiredRoles", requiredRoles);
     const token = req?.headers?.authorization?.split(" ")[1].trim();
-
-    console.log("token", token);
 
     if (!token)
       throw new AppError(statusCode.unauthorized, "Unauthorized access");
@@ -21,7 +18,6 @@ const auth = (...requiredRoles: TUserRole[]) => {
       config.jwt_access_secret as string,
     ) as JwtPayload;
 
-    console.log("decoded", decoded);
     if (!decoded)
       throw new AppError(statusCode.unauthorized, "Unauthorized access");
 
@@ -31,7 +27,6 @@ const auth = (...requiredRoles: TUserRole[]) => {
 
     if (!user)
       throw new AppError(statusCode.unauthorized, "Unauthorized access");
-    console.log("user ", user);
     if (user.isBlocked)
       throw new AppError(statusCode.forbidden, "User is blocked");
 

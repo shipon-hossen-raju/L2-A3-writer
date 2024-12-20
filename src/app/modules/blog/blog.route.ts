@@ -30,4 +30,7 @@ route.delete(
   blogController.deleteBlog,
 );
 
+// get all blogs
+route.get("/", blogController.getAllBlogs);
+
 export const blogRoute = route;
