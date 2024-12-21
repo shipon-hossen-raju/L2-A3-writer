@@ -4,7 +4,6 @@ import statusCode from "../../utils/status.code";
 import { userService } from "./user.service";
 
 const createUser = catchAsync(async (req, res) => {
-  console.log("user called req.body -> ", req.body);
   const clientData = {
     ...req.body,
     role: "user",

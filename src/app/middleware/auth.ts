@@ -23,8 +23,8 @@ const auth = (...requiredRoles: TUserRole[]) => {
 
     const { _id, role, iat, exp } = decoded;
 
-    const user = await userModel.findById(_id).select("+password");
-    console.log("user", user);
+    const user = await userModel.findById(_id);
+
     if (!user)
       throw new AppError(statusCode.unauthorized, "Unauthorized access");
     if (user.isBlocked)
@@ -33,12 +33,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     if (requiredRoles && !requiredRoles.includes(role as TUserRole))
       throw new AppError(statusCode.forbidden, "Forbidden access!");
 
-    req.user = {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-    };
+    req.user = user;
 
     next();
   });

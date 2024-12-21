@@ -20,8 +20,6 @@ const userBlockIntoDB = async (userId: string) => {
 const blogDeleteAdminIntoDB = async (blogId: string) => {
   // update user status to blocked
   const blogDeleted = await BlogModel.findByIdAndDelete(blogId);
-  console.log("blogId ", blogId);
-  console.log("updatedUser ", blogDeleted);
 
   if (!blogDeleted) {
     throw new Error("blog not found");

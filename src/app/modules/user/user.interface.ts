@@ -8,6 +8,7 @@ export type TUser = {
   password: string;
   role: "admin" | "user";
   isBlocked: boolean;
+  createdAt?: Date;
 };
 
 export interface UserModel extends Model<TUser> {
