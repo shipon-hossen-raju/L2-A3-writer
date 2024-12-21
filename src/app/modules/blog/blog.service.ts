@@ -8,7 +8,7 @@ const createBlogIntoDB = async (payload: TBlog) => {
   return blogSaved;
 };
 
-// update blog
+// update single blog
 const getBlogById = async (id: string) => {
   const getBlog = await BlogModel.findById(id);
 
@@ -34,7 +34,7 @@ const deleteBlogIntoDB = async (id: string) => {
 // get all blogs from db by search, sortby, filter
 const getAllBlogsFromDB = async (query: Record<string, unknown>) => {
   const courseQuery = new QueryBuilder(
-    BlogModel.find().populate("author"),
+    BlogModel.find().populate("author", { name: 1, email: 1 }),
     query,
   )
     .search(searchableFields)
