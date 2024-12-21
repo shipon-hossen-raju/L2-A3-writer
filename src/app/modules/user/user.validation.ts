@@ -24,7 +24,6 @@ const userCreateValidation = z.object({
       .min(6, { message: "Password must be at least 6 characters or more" }),
 
     isBlocked: z.boolean().optional().default(false),
-    isDeleted: z.boolean().optional().default(false),
   }),
 });
 

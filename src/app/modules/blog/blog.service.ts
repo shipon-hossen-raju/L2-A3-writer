@@ -1,3 +1,5 @@
+import QueryBuilder from "../../builder/QueryBuilder";
+import { searchableFields } from "./blog.const";
 import { TBlog, TUpdateBlog } from "./blog.interface";
 import BlogModel from "./blog.model";
 
@@ -30,26 +32,18 @@ const deleteBlogIntoDB = async (id: string) => {
 };
 
 // get all blogs from db by search, sortby, filter
-const getAllBlogsFromDB = async (
-  search?: string,
-  sortBy?: string,
-  sortOrder?: string,
-  filter?: string,
-) => {
-  const query = {} as any;
+const getAllBlogsFromDB = async (query: Record<string, unknown>) => {
+  const courseQuery = new QueryBuilder(
+    BlogModel.find().populate("author"),
+    query,
+  )
+    .search(searchableFields)
+    .filter()
+    .sort();
 
-  if (search) query.title = { $regex: search, $options: "i" };
+  const blogs = await courseQuery.modelQuery;
 
-  if (filter) query.author = filter;
-
-  const sortOption = {} as any;
-  if (sortBy) {
-    sortOption[sortBy] = sortOrder === "desc" ? -1 : 1;
-  }
-
-  console.log("search query", query);
-
-  return await BlogModel.find(query).sort(sortOption);
+  return blogs;
 };
 
 export const blogService = {

@@ -30,10 +30,6 @@ const userSchema = new Schema<TUser>(
       type: Boolean,
       default: false,
     },
-    isDeleted: {
-      type: Boolean,
-      default: false,
-    },
   },
   {
     timestamps: true,

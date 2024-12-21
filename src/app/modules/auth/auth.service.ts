@@ -15,9 +15,6 @@ const loginUser = async (payload: TUser) => {
   if (user.isBlocked)
     throw new AppError(statusCode.forbidden, "User is blocked");
 
-  // user deleted checking
-  if (user.isDeleted) throw new AppError(statusCode.notFound, "User deleted");
-
   // password matching
   const isPasswordMatched = await userModel.isPasswordMatched(
     payload.password,
