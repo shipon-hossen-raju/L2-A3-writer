@@ -34,7 +34,7 @@ const deleteBlogIntoDB = async (id: string) => {
 // get all blogs from db by search, sortby, filter
 const getAllBlogsFromDB = async (query: Record<string, unknown>) => {
   const courseQuery = new QueryBuilder(
-    BlogModel.find().populate("author", { name: 1, email: 1 }),
+    BlogModel.find().populate("author"),
     query,
   )
     .search(searchableFields)
