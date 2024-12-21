@@ -5,7 +5,6 @@ import { adminService } from "./admin.service";
 
 const blockUser = catchAsync(async (req, res) => {
   const { userId } = req.params;
-
   const blocked = req.url.split("/").pop();
   if (blocked !== "block") {
     return sendResponse(res, {

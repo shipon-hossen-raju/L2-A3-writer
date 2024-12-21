@@ -7,6 +7,7 @@ import { blogValidation } from "./blog.validation";
 
 const route = Router();
 
+// blog create route
 route.post(
   "/",
   auth(USER_ROLE.user),
