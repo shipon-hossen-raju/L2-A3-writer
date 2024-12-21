@@ -24,7 +24,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     const { _id, role, iat, exp } = decoded;
 
     const user = await userModel.findById(_id);
-
+    console.log("user", user);
     if (!user)
       throw new AppError(statusCode.unauthorized, "Unauthorized access");
     if (user.isBlocked)
@@ -34,7 +34,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
       throw new AppError(statusCode.forbidden, "User is deleted");
 
     if (requiredRoles && !requiredRoles.includes(role as TUserRole))
-      throw new AppError(statusCode.forbidden, "Forbidden access");
+      throw new AppError(statusCode.forbidden, "Forbidden access!");
 
     req.user = user;
 

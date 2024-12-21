@@ -26,4 +26,25 @@ const blockUser = catchAsync(async (req, res) => {
   });
 });
 
-export const adminController = { blockUser };
+const blogDeleteAdmin = catchAsync(async (req, res) => {
+  const { blogId } = req.params;
+
+  if (!blogId) {
+    return sendResponse(res, {
+      success: false,
+      message: "Invalid URL",
+      statusCode: statusCode.badRequest,
+    });
+  }
+
+  // blog delete
+  const blog = await adminService.blogDeleteAdminIntoDB(blogId);
+
+  sendResponse(res, {
+    success: true,
+    message: "Blog deleted successfully",
+    statusCode: statusCode.ok,
+  });
+});
+
+export const adminController = { blockUser, blogDeleteAdmin };
