@@ -12,8 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const mongoose_1 = require("mongoose");
 const config_1 = __importDefault(require("../../config"));
 const userSchema = new mongoose_1.Schema({
     name: {
@@ -30,7 +30,7 @@ const userSchema = new mongoose_1.Schema({
     password: {
         type: String,
         required: true,
-        // select: 0,
+        select: 0,
     },
     role: {
         type: String,
@@ -40,6 +40,7 @@ const userSchema = new mongoose_1.Schema({
     isBlocked: {
         type: Boolean,
         default: false,
+        select: 0,
     },
 }, {
     timestamps: true,

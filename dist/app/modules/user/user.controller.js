@@ -18,7 +18,6 @@ const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const status_code_1 = __importDefault(require("../../utils/status.code"));
 const user_service_1 = require("./user.service");
 const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("user called req.body -> ", req.body);
     const clientData = Object.assign(Object.assign({}, req.body), { role: "user" });
     const result = yield user_service_1.userService.createUserIntoDB(clientData);
     (0, sendResponse_1.default)(res, {

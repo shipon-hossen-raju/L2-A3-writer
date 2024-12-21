@@ -13,10 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authController = void 0;
+const config_1 = __importDefault(require("../../config"));
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const status_code_1 = __importDefault(require("../../utils/status.code"));
 const user_service_1 = require("../user/user.service");
+const auth_service_1 = require("./auth.service");
+// register user
 const registerUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield user_service_1.userService.createUserIntoDB(req.body);
     if (!result)
@@ -35,6 +38,22 @@ const registerUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         data,
     });
 }));
+// login user
+const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield auth_service_1.authService.loginUser(req.body);
+    const { accessToken, refreshToken } = result;
+    res.cookie("refreshToken", refreshToken, {
+        secure: config_1.default.node_env === "production",
+        httpOnly: true,
+    });
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        message: "User logged in successfully",
+        statusCode: status_code_1.default.ok,
+        data: { token: accessToken },
+    });
+}));
 exports.authController = {
     registerUser,
+    loginUser,
 };

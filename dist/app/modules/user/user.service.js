@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.userService = void 0;
 const user_model_1 = __importDefault(require("./user.model"));
 const createUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("service payload ", payload);
     const userSaved = yield user_model_1.default.create(payload);
     return userSaved;
 });

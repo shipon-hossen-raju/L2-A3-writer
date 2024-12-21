@@ -30,8 +30,8 @@ Make sure you have the following installed:
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd assignment-3
+   git clone https://github.com/shipon-hossen-raju/L2-A3-writer.git
+   cd L2-A3-writer
    ```
 2. Install dependencies:
    ```bash
