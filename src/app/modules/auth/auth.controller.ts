@@ -28,7 +28,6 @@ const registerUser = catchAsync(async (req, res) => {
 });
 
 // login user
-
 const loginUser = catchAsync(async (req, res) => {
   const result = await authService.loginUser(req.body);
   const { accessToken, refreshToken } = result;
