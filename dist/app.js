@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 // app routes
-app.use("/api/", routes_1.default);
+app.use("/api", routes_1.default);
 // ------------------
 // global Error Handle
 app.use(globalErrorHandler_1.default);
