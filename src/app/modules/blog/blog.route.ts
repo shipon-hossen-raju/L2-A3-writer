@@ -1,8 +1,8 @@
 import { Router } from "express";
 import auth from "../../middleware/auth";
+import validateRequest from "../../middleware/validateRequest";
 import { USER_ROLE } from "../user/user.constant";
 import { blogController } from "./blog.controller";
-import validateRequest from "../../middleware/validateRequest";
 import { blogValidation } from "./blog.validation";
 
 const route = Router();
@@ -34,4 +34,4 @@ route.delete(
 // get all blogs
 route.get("/", blogController.getAllBlogs);
 
-export const blogRoute = route;
+export const BlogRoute = route;
