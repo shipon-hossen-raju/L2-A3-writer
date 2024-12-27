@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const user_route_1 = require("../modules/user/user.route");
-const blog_route_1 = require("../modules/blog/blog.route");
-const auth_route_1 = require("../modules/auth/auth.route");
 const admin_route_1 = require("../modules/admin/admin.route");
+const auth_route_1 = require("../modules/auth/auth.route");
+const blog_route_1 = require("../modules/blog/blog.route");
+const user_route_1 = require("../modules/user/user.route");
 const router = (0, express_1.Router)();
 const moduleRoutes = [
     {
-        path: "/",
+        path: "/auth",
         route: auth_route_1.AuthRoute,
     },
     {
@@ -17,7 +17,7 @@ const moduleRoutes = [
     },
     {
         path: "/blogs",
-        route: blog_route_1.blogRoute,
+        route: blog_route_1.BlogRoute,
     },
     {
         path: "/admin",

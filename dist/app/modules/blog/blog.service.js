@@ -39,7 +39,7 @@ const deleteBlogIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* () 
 });
 // get all blogs from db by search, sortby, filter
 const getAllBlogsFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    const courseQuery = new QueryBuilder_1.default(blog_model_1.default.find().populate("author", { name: 1, email: 1 }), query)
+    const courseQuery = new QueryBuilder_1.default(blog_model_1.default.find().populate("author"), query)
         .search(blog_const_1.searchableFields)
         .filter()
         .sort();
